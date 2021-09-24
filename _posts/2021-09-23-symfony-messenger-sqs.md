@@ -1,8 +1,6 @@
 ---
 title: "Symfony Messenger with custom SQS Transporter + JMS"
 excerpt_separator: "<!--more-->"
-categories:
-  - Software Development
 tags:
   - Symfony
   - AWS

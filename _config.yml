@@ -44,7 +44,7 @@ plugins:
 author:
   name   : "douglasjam"
   avatar : "assets/images/douglas-bio.jpeg"
-  bio    : "PHP Freelancer"
+  bio    : ""
   location: "Hamburg, Germany"
   links:
     - label: "Hamburg, Germany"
@@ -69,7 +69,7 @@ defaults:
       author_profile: true
       read_time: true
       comments: true
-      share: true
+      share: false
       related: true
   # _pages
   - scope:
@@ -85,3 +85,11 @@ category_archive:
 tag_archive:
   type: liquid
   path: /tags/
+
+comments:
+  provider: "disqus"
+  disqus:
+    shortname: "douglasjam"
+
+atom_feed:
+  hide: true
