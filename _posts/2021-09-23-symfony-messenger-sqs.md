@@ -2,34 +2,36 @@
 title: "Symfony Messenger with custom SQS Transporter + JMS"
 excerpt_separator: "<!--more-->"
 categories:
-  - Blog
+  - Software Development
 tags:
   - Symfony
   - AWS
   - SQS
 ---
 
-Similar to the Event Dispatcher, Symfony has a component called Messenger. The main difference between both is that the last one allows us to dispatch and handle events asynchronously via the most diverse transporters like AMQP, Redis, Doctrine and others. It's a plug-and-play component, easy to install and configure but what makes the big differential is its extendability.
+Similar to the Event Dispatcher, Symfony has a component called Messenger. The main difference between both is that the last one allows us to dispatch and handle events asynchronously via the most diverse transporters like AMQP, Redis, Doctrine and others. It's a plug-and-play component, easy to install and configure but what makes it great is its extendable design.
 
-I had a scenario where I needed to push messages into SQS, symfony already provides integration to it but offered solution did not match all my needs and I had to implement a custom transporter. My needs were:
+I had a scenario where I needed to push messages into SQS, Symfony Messenger already provides an integration to it but the offered solution did not match all my needs, and I ended up implementing a custom transporter. My needs were:
 
-- #### [JMS Serializer](https://github.com/schmittjoh/serializer) as default serializer
+- #### Use [JMS Serializer](https://github.com/schmittjoh/serializer) as serializer
 
-    Our codebase use for many objects JMS serializer to push and receive DTOs, JMS does not implement Symfony serializer interface and can not handle many cases without annotations. Having to use 2 different serializer would increase the project complexity
+    Our codebase uses the JMS serializer lib to convert objects to and from JSON via our endpoints, JMS does not implement the Symfony serializer interface and can not simply handle any type of object. Having to mix different serializer would increase the project complexity and was a no-go for us
 
-- #### SQS environment from [localstack](https://github.com/localstack/localstack) were not easily configurable
+- #### SQS environment from [localstack](https://github.com/localstack/localstack) was not easily configurable
   
-    For local enviromment, we use localstack to simulate the AWS services, localstack has a different configuration than the dns option provided by the Symfony SQS Transporter, the way would be to inject our manually configured SQS client
+    For our local development environment we use `localstack` to simulate the AWS services, localstack has a different configuration than the dns option provided by the Symfony SQS Transporter that just didn't fit. The way to go would be to inject our manually configured SQS client
 
 - ####  We wanted simple human-readable messages in the queues
 
-    The default transporter pushes many stamps that are not needed to us, we just would like a couple that are meaningful to us
+    The default transporter pushes many stamps that are not needed to us, we just would like a couple that are meaningful to us like createdDate and what DTO object was in the message
 
 - #### We wanted to log whenever a message was created, handled, succeeded or failed
 
-    A crucial part of our job is to see historically how a message behaved and drove its way until completion or failure, being able to log in specific parts in specific ways were a must 
+    A crucial part of our job is to see historically how a message behaved and drove its way until completion or failure, being able to log in specific parts in specific ways were a must. Symfony messenger already logs all its activities but not in the way we wanted to
 
-In order to create a custom transporter we need to create a class that implement `TransportInterface`. This interface has 4 required methods:
+## How to create a custom transporter
+
+The first thing you need to do is to create a class that implements `TransportInterface`. This interface has 4 required methods:
 
 ```php
 // used when dispatch a new message
@@ -44,19 +46,12 @@ public function reject(Envelope $envelope): void
 
 ## send()
 
-The first step we do when having the messenger is to dispatch messages, there is no magic here, but since I use JMS I did an extra mile by doing custom annotation for serialization special cases
-
-```php
-use Symfony\Component\Messenger\MessageBusInterface;
-...
-$job = new MyCustomJob();
-$this->messageBus->dispatch($job);
-``````
-
-After that and the transporter configured, the `send()` method will be invoked, in here what I did is to create some new `stamps` that are JMS serializable:
+All starts by dispatching messages that end-up in our queue, there is no magic here but since we use JMS an extra effort was needed. We needed to create a custom JMS serializable stamps to attach to our envelope, they were:
 
 - JmsTypeStamp: to identify which class I was serializing in the envelope message, so I could decode afterwards
 - CreatedAt: to track when the message was created
+
+After serializing the envelope we just had to push it to SQS.
 
 ```php
 public function send(Envelope $envelope): Envelope
@@ -83,34 +78,11 @@ public function send(Envelope $envelope): Envelope
     }
 ```
 
-After this method being called, the following message would end-up in SQS:
-
-```json
-{
-    "stamps": {
-        "MyProject\\Stamp\\JmsTypeStamp": [
-            { "type": "MyProject\\MyMessageObject" }
-        ],
-        "MyProject\\Stamp\\CreatedAtStamp": [
-            { "createdAt": "2020-12-14 16:02:17" }
-        ]
-    },
-    "message": {
-        "name": "John Doe",
-        "date": "2021-08-03",
-        "address": {
-            "street": "MyStreet",
-            "number": 12
-        }
-    }
-}
-```
-
 ## get()
 
 The `get()` method basically the opposite of send. We get SQS messages and have to deserialize them back into an envelope. The catch is to find out what type is the envelope message. The good part of the envelope structure is that the stamps are an array where the key is its class name. With that we can easily find out `JmsType` stamp and decode the envelope message as well as other stamps to deserialize them properly.
 
-One important thing to remember is that we need to store the SQS `ReceiptHandle` in our envelope, so we can ack the message at the end, for that a new stamp `SqsMetadataStamp` was created.
+One important thing to remember is that we need to add the SQS `ReceiptHandle` into our envelope, so we can ack the message at the end, for that a new stamp `SqsMetadataStamp` was created.
 
 ```php
  public function get(): iterable
@@ -188,7 +160,7 @@ public function ack(Envelope $envelope): void
 
 ## reject()
 
-The reject method is called when we could not handle the message after its retries. By default, Symfony tries to handle every message 3 times before executing the reject method. The reject method is usually meant to put the message in some other state, like pushing it into another queue, or updating some database status. For SQS queues we mostly rely on `DeadLetterQueues`, a spare queue in which failed messages end up. Since the SQS mechanism already have the retry mechanism in place and `reject` behaviour I decided to let this method only for logging purposes. Another important poins is that I configured the messenger to do not retry messages, otherwise it would multiply Symfony retries with SQS configured retries.
+The reject method is called when we could not handle the message after its retries. By default, Symfony tries to handle every message 3 times before executing the reject method. The reject method is usually meant to put the message in some other state, like pushing it into another queue, or updating some database status. For SQS queues we mostly rely on `DeadLetterQueues`. Since the SQS mechanism already have the retry and DLQ mechanism in place we decided to let this method only for logging purposes. Another important point is that I configured the messenger to do not retry messages, otherwise it would retry every message 3 times for every SQS retry, totalizing 9 times instead of 3.
 
 ```php
 public function reject(Envelope $envelope): void
@@ -196,3 +168,92 @@ public function reject(Envelope $envelope): void
         $this->log(self::FAILED_MESSAGE, $envelope);
     }
 ```
+
+## Enabling the Transporter
+
+Before enabling and using your custom transporter you need to teach Symfony how to construct it. To do this, create a factory class implementing `TransportFactoryInterface` that returns your transporter. The method `supports` is used by Symfony to identify which transporter will be used based on the bundle configuration in `messenger.yaml`. Pay attention to use an exclusive pattern for it in order to do not collide with others like `sqs://`. You can also use the dns string to inject parameters and extract them from it, like `my-transport://queue-name/account` but I rather do it via the options parameter.
+
+```php
+class SqsTransportFactory implements TransportFactoryInterface
+{
+    use LoggerAwareTrait;
+
+    public function __construct(private SqsClient $sqsClient, private JmsSerializer $jmsSerializer)
+    {
+    }
+
+    public function createTransport(string $dsn, array $options, SerializerInterface $serializer): TransportInterface
+    {
+        return new SqsTransport($this->sqsClient, $this->jmsSerializer, $this->logger, $options['queue_name']);
+    }
+
+    public function supports(string $dsn, array $options): bool
+    {
+        return str_starts_with($dsn, 'transporter-sqs://');
+    }
+}
+```
+
+Tag the transporter factory in your container configuration file `services.yaml`:
+
+```yaml
+    MyNamespace\MyCustomTransporter:
+        tags: [messenger.transport_factory]
+```
+
+The last step is to activate your transporter in the bundle configuration, one important thing to look is that I configured `retry_strategy.max_retries` to 0 in order to prevent symfony to retry and to rely on SQS retry mechanism.
+The routing part is optional when you have only one transporter activated but if you have more you may want to tell in which to use explicitly in case you do not want to route it to 2 or more transporters.
+
+```yaml
+framework:
+    messenger:
+        transports:
+            jobs-sqs:
+                dsn: 'transporter-sqs://'
+                retry_strategy:
+                    max_retries: 0
+                options:
+                    queue_name: '%env(SQS_QUEUE_NAME)%'
+
+        routing:
+            'MyNamespace\MyCustomJob': transporter-sqs
+```
+
+# Running
+
+First thing that needs to happen is to dispatch messages that will end up in the queue, usually you want to do this via your controller or other job, you simply need to create a message and dispatch it via the `MessageBus` as below:
+
+```php
+use Symfony\Component\Messenger\MessageBusInterface;
+...
+$job = new MyCustomJob();
+$this->messageBus->dispatch($job);
+``````
+A message like below should end-up in the SQS queue:
+
+```json
+{
+    "stamps": {
+        "MyProject\\Stamp\\JmsTypeStamp": [
+            { "type": "MyProject\\MyMessageObject" }
+        ],
+        "MyProject\\Stamp\\CreatedAtStamp": [
+            { "createdAt": "2020-12-14 16:02:17" }
+        ]
+    },
+    "message": {
+        "name": "John Doe",
+        "date": "2021-08-03",
+        "address": {
+            "street": "MyStreet",
+            "number": 12
+        }
+    }
+}
+```
+
+To start consuming messages you should another proccess, ideally via CLI that executes the command below. This command has many parameters and options like limit how long it should execute, how many messages to pull, max memory and others. Make sure you read symfony documentation to get to know all of them.
+
+```./bin/console messenger:consume```
+
+What did you think about our approach to adjust the messenger to our needs, would you do something different?
