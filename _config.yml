@@ -93,3 +93,9 @@ comments:
 
 atom_feed:
   hide: true
+
+analytics:
+  provider: "google-gtag"
+  google:
+    tracking_id: "UA-78566019-1"
+    anonymize_ip: true
