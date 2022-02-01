@@ -12,4 +12,3 @@ I’ve also spent some time exercising today as planned, went out by bicycle wit
 I started listening to the Will Smith biography and didn’t manage to save so much time to work on my own projects.
 
 Tomorrow I plan to catch up with my side projects and make a draft about my level 10 vision of my future self.
-![image](https://user-images.githubusercontent.com/932633/152061230-7e75bcf1-1028-454e-a135-08333eeb2234.png)
