@@ -43,7 +43,7 @@ plugins:
 
 author:
   name   : "douglasjam"
-  avatar : "assets/images/douglas-bio.jpeg"
+  avatar : "assets/images/avatar.png"
   bio    : ""
   location: "Hamburg, Germany"
   links:
