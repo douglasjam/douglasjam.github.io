@@ -8,6 +8,10 @@ It's been already some time since I finished this book, and it helped to cut a l
 
 Some time ago I decided to listen to this book during my workout routines, and I do not regret it. I'd like to share my key findings of this book and what applied to me the most with some personal examples from what I can recall.
 
+<a href="https://amzn.to/334Ax37" target="_blank">
+![Atomic Habits Book]({{ site.url }}{{ site.baseurl }}/assets/images/2022-02-07-atomic-habits/atomic-habits-book.png){: .align-center}
+</a>
+
 ### How to break a bad habit.
 
 Change your mindset, do not say, I'm quitting smoking, I'm stopping to eat my nails. Say I'm not a smoker, I do not eat nails. When you do this your brain assimilates you as a new type of person.
