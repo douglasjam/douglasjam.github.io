@@ -32,3 +32,8 @@ $type-size-8 : 0.625em;  // ~10px
   padding-left: 1em;
   padding-bottom: 1em;
 }
+
+.author__avatar img {
+  max-width: 180px;
+  border: none;
+}
