@@ -4,17 +4,15 @@ teaser: "/assets/images/2022-02-07-atomic-habits/atomic-habits-book.png"
 tags:
 - Book Review
 ---
-It's been already some time since I finished this book, and it helped to cut a lifelong bad habit: nail-biting.
-
-Some time ago I decided to listen to this book during my workout routines, and I do not regret it. I'd like to share my key findings of this book and what applied to me the most with some personal examples from what I can recall.
-
-<a href="https://amzn.to/334Ax37" target="_blank">
-![Atomic Habits Book]({{ site.url }}{{ site.baseurl }}/assets/images/2022-02-07-atomic-habits/atomic-habits-book.png){: .align-center}
-</a>
+It's been already some time since I finished this book, and it helped to cut a lifelong bad habit: nail-biting. I used to listen to this book during my workout routines, and I do not regret it. I'd like to share my key findings of this book and what applied to me the most with some personal examples from what I can recall.
 
 ### How to break a bad habit.
 
 Change your mindset, do not say, I'm quitting smoking, I'm stopping to eat my nails. Say I'm not a smoker, I do not eat nails. When you do this your brain assimilates you as a new type of person.
+
+<a href="https://amzn.to/334Ax37" target="_blank">
+![Atomic Habits Book]({{ site.url }}{{ site.baseurl }}/assets/images/2022-02-07-atomic-habits/atomic-habits-book.png){: .align-right .max-200}
+</a>
 
 #### Cue
 Your brain associates trigger to habits, if every time you had lunch you eat a bar of chocolate afterward, your brain associates lunch with chocolate reward. You have to replace this, make it clear, every time I have lunch, I'll brush my teeth afterward. With time the connection will fade.
@@ -43,7 +41,7 @@ If you want to start eating more fruits and don't like eating kiwis, don't pick 
 If it takes you too much effort to do you probably will skip:
 - Don't commit to 30min reading, but 2 pages at a day
 - Don't commit to going to exercise 5 days a week, start by one a week
--
+- 
 #### Make it satisfying
 Reward yourself after your habit, if you study for 45 min, you can surf on the internet 15min. This way you will be creating a habit.
 Using apps to track habits makes you know how good you are doing it, when you have a streak reward you with something like going out, being allowed to eat certain food.

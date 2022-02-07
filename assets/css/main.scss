@@ -37,3 +37,11 @@ $type-size-8 : 0.625em;  // ~10px
   max-width: 180px;
   border: none;
 }
+
+.max-200 {
+  max-width: 200px;
+}
+
+.archive__item {
+  clear: both;
+}
