@@ -1,10 +1,11 @@
 title: douglasjam
-email:
 description: >- # this means to ignore newlines until "baseurl:"
   Trying to express my thoughts and findings to the internet, you may find something useful for you
+
+email:
 github_username: douglasjam
 repository: "douglasjam/douglasjam.github.io"
-minimal_mistakes_skin    : "default"
+minimal_mistakes_skin: "default"
 
 search: true
 
@@ -45,11 +46,15 @@ plugins:
 author:
   name   : "douglasjam"
   avatar : "assets/images/avatar.png"
-  bio    : ""
+  bio    : "I'm a software developer, proud parent. I love to practice sports and automate things."
   location: "Hamburg, Germany"
   links:
     - label: "Hamburg, Germany"
       icon: "fab fa-fw fa-map-marker-alt"
+    - label: "Itaúna, Brazil"
+      icon: "fab fa-fw fa-baby-carriage"
+    - label: "PHP, Symfony VueJS, Mongo"
+      icon: "fab fa-fw fa-baby-carriage"
     - label: "Linkedin"
       icon: "fab fa-fw fa-linkedin"
       url: "https://www.linkedin.com/in/douglasjam/"
