@@ -16,3 +16,19 @@ $type-size-5 : 1em;      // ~16px
 $type-size-6 : 0.75em;   // ~12px
 $type-size-7 : 0.6875em; // ~11px
 $type-size-8 : 0.625em;  // ~10px
+
+.red {
+  color: #EA4235 !important;
+}
+
+.orange {
+  color: #fc4c02 !important;
+}
+
+.post-list-image {
+  max-width: 12em;
+  max-height: 12em;
+  float: right;
+  padding-left: 1em;
+  padding-bottom: 1em;
+}

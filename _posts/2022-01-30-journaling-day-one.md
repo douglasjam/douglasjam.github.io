@@ -1,5 +1,6 @@
 ---
 title: "Journaling, day one"
+teaser: "/assets/images/2022-01-30-journaling-day-one/miracle-morning-book.png"
 tags:
   - Journaling
 ---

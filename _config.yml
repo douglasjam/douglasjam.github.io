@@ -46,18 +46,32 @@ plugins:
 author:
   name   : "douglasjam"
   avatar : "assets/images/avatar.png"
-  bio    : "I'm a software developer, proud parent. I love to practice sports and automate things."
+  bio    : >-
+    Father, husband and Christian.<br />
+    Software Developer<br />
+    Automation enthusiast<br />
+    Likes 🥋 🚴 ‍🎣 🧑‍🌾 🍔
   location: "Hamburg, Germany"
+  born_at: "Itaúna, Brazil"
+  work_skills: "PHP, Symfony, VueJS, Mongo"
   links:
-    - label: "Hamburg, Germany"
-      icon: "fab fa-fw fa-map-marker-alt"
-    - label: "Itaúna, Brazil"
-      icon: "fab fa-fw fa-baby-carriage"
-    - label: "PHP, Symfony VueJS, Mongo"
-      icon: "fab fa-fw fa-baby-carriage"
     - label: "Linkedin"
       icon: "fab fa-fw fa-linkedin"
       url: "https://www.linkedin.com/in/douglasjam/"
+    - label: "Strava"
+      icon: "fab fa-fw fa-strava orange"
+      url: "https://www.strava.com/athletes/douglasjam"
+
+sidebar:
+  - title: "A"
+  - title: "b"
+#  - title: "Title"
+#    image: "/assets/images/your-image.jpg"
+#    image_alt: "image"
+#    text: "Some text here."
+#  - title: "Another Title"
+#    text: "More text here."
+#    nav: sidebar-sample
 
 footer:
   links:
