@@ -84,9 +84,11 @@ tag_archive:
   path: /tags/
 
 comments:
-  provider: "disqus"
-  disqus:
-    shortname: "douglasjam"
+  provider: "utterances"
+  utterances:
+    theme: "github-light" # "github-dark"
+    issue_term: "pathname"
+    label: "comment" # Optional - must be existing label.
 
 atom_feed:
   hide: true
