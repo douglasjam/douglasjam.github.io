@@ -3,6 +3,7 @@ email:
 description: >- # this means to ignore newlines until "baseurl:"
   Trying to express my thoughts and findings to the internet, you may find something useful for you
 github_username: douglasjam
+repository: "douglasjam/douglasjam.github.io"
 minimal_mistakes_skin    : "default"
 
 search: true
