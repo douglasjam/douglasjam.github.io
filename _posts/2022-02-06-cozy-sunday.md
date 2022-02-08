@@ -2,7 +2,7 @@
 title: "Cozy Sunday"
 teaser: "/assets/images/2022-02-06-cozy-sunday/icf-hamburg.png"
 tags:
-- Cozy Sunday
+- Journaling
 ---
 Today was the family day, was tempted to skip the morning routine but I managed to leave after 2 alarm snoozes. We had to hurry up as we wanted to go to the church at the city center, 1 hour seems to be enough to make breakfast, dress and help 2 children to do the same but it’s very tight, but as usual, after a bit of stress we left on time.
 

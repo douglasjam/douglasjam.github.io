@@ -3,6 +3,7 @@ title: "Atomic Habits"
 teaser: "/assets/images/2022-02-07-atomic-habits/atomic-habits-book.png"
 tags:
 - Book Review
+- Productivity
 ---
 It's been already some time since I finished this book, and it helped to cut a lifelong bad habit: nail-biting. I used to listen to this book during my workout routines, and I do not regret it. I'd like to share my key findings of this book and what applied to me the most with some personal examples from what I can recall.
 
@@ -41,7 +42,7 @@ If you want to start eating more fruits and don't like eating kiwis, don't pick 
 If it takes you too much effort to do you probably will skip:
 - Don't commit to 30min reading, but 2 pages at a day
 - Don't commit to going to exercise 5 days a week, start by one a week
-- 
+
 #### Make it satisfying
 Reward yourself after your habit, if you study for 45 min, you can surf on the internet 15min. This way you will be creating a habit.
 Using apps to track habits makes you know how good you are doing it, when you have a streak reward you with something like going out, being allowed to eat certain food.
